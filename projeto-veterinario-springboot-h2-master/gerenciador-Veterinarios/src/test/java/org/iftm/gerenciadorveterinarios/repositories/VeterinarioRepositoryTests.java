@@ -161,5 +161,39 @@ public class VeterinarioRepositoryTests {
         // Assert
         assertEquals(5, resultado.size());
     }
-    
+
+    @Test
+    public void atualizarVeterinarioERefletirNasBuscas(){
+
+        // Arrange
+        List<Veterinario> lista = veterinarioRepository.findByNome("PEDRO");
+        Veterinario vet = lista.get(0);
+
+        vet.setNome("PEDRO ALTERADO");
+        vet.setSalario(new BigDecimal("9999.0"));
+
+        // Act
+        veterinarioRepository.save(vet);
+
+        // Assert (nome antigo)
+        List<Veterinario> buscaAntiga =
+            veterinarioRepository.findByNome("PEDRO");
+
+        assertTrue(buscaAntiga.isEmpty());
+
+        // Assert (nome novo)
+        List<Veterinario> buscaNova =
+            veterinarioRepository.findByNome("PEDRO ALTERADO");
+
+        assertEquals(1, buscaNova.size());
+        assertEquals("PEDRO ALTERADO", buscaNova.get(0).getNome());
+
+        // Assert (salário novo)
+        List<Veterinario> salarioNovo =
+            veterinarioRepository.findBySalarioGreaterThan(new BigDecimal("9000"));
+
+        assertEquals(1, salarioNovo.size());
+        
+    }
+
 }

@@ -16,7 +16,12 @@ public class VeterinarioService {
 
     @Transactional(readOnly = true)
     public List<Veterinario> buscaVeterinariosComParteNome(String nome){
-        return repositorio.findByNomeContains(nome);
+
+        if (nome == null || nome.isEmpty()) {
+            return repositorio.findAll();
+        }
+
+        return repositorio.findByNomeContainingIgnoreCase(nome);
     }
 
     @Transactional(readOnly = true)

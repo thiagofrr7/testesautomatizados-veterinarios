@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface VeterinarioRepository extends JpaRepository<Veterinario, Integer> {
 
-    List<Veterinario> findByNomeContains(String nome);
+    List<Veterinario> findByNome(String nome);
 
     List<Veterinario> findByNomeIgnoreCase(String nome);
+
+    List<Veterinario> findByNomeContainingIgnoreCase(String nome);
 
 }

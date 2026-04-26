@@ -25,7 +25,7 @@ public class VeterinarioRepositoryTests {
         String nomeTeste = "pedro";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNome(nomeTeste);
 
         // Assert
         assertTrue(resultado.isEmpty());
@@ -38,7 +38,7 @@ public class VeterinarioRepositoryTests {
         String nomeTeste = "PEDRO";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNome(nomeTeste);
 
         // Assert
         assertEquals(1, resultado.size());
@@ -81,7 +81,7 @@ public class VeterinarioRepositoryTests {
         String nomeTeste = "ro";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContainingIgnoreCase(nomeTeste);;
 
         // Assert
         assertEquals(2, resultado.size());
@@ -95,7 +95,7 @@ public class VeterinarioRepositoryTests {
         String nomeTeste = "Maria";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContainingIgnoreCase(nomeTeste);;
 
         // Assert
         assertTrue(resultado.isEmpty());
@@ -109,7 +109,7 @@ public class VeterinarioRepositoryTests {
         String nomeTeste = "";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContainingIgnoreCase(nomeTeste);;
 
         // Assert
         assertEquals(6, resultado.size()); 

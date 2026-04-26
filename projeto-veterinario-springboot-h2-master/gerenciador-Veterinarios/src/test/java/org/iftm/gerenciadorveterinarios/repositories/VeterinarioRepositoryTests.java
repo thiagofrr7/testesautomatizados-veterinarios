@@ -17,26 +17,26 @@ public class VeterinarioRepositoryTests {
     private VeterinarioRepository veterinarioRepository;
 
     @Test
-    public void deveRetornarVazio_quandoBuscarNomeExatoEmMinusculo(){
+    public void buscaPorNomeMinusculoExata(){
 
         // Arrange
         String nomeTeste = "pedro";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNome(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
 
         // Assert
         assertTrue(resultado.isEmpty());
     }
 
     @Test
-    public void deveRetornarVeterinario_quandoBuscarNomeExatoMaiusculo(){
+    public void buscaPorNomeMaiusculoExata(){
 
         // Arrange
         String nomeTeste = "PEDRO";
 
         // Act
-        List<Veterinario> resultado = veterinarioRepository.findByNome(nomeTeste);
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
 
         // Assert
         assertEquals(1, resultado.size());
@@ -44,7 +44,7 @@ public class VeterinarioRepositoryTests {
     }
 
     @Test
-    public void deveRetornarVazio_quandoBuscarNomeInexistenteIgnoreCase(){
+    public void buscaPorNomeInexistenteCaseInsensitive(){
 
         // Arrange
         String nomeTeste = "jose";
@@ -57,7 +57,7 @@ public class VeterinarioRepositoryTests {
     }
 
     @Test
-    public void deveRetornarVeterinario_quandoBuscarNomeIgnoreCase(){
+    public void buscaPorNomeExistenteCaseInsensitive(){
 
         // Arrange
         String nomeTeste = "joao";

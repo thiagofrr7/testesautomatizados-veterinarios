@@ -3,3 +3,4 @@ INSERT INTO tb_veterinario (nome, email, especialidade, salario) VALUES('ANGELIC
 INSERT INTO tb_veterinario (nome, email, especialidade, salario) VALUES('MATHEUS',  'matheusribeiro@gmail.com', 'grandes', 3200.0);
 INSERT INTO tb_veterinario (nome, email, especialidade, salario) VALUES('PEDRO',  'pedro@gmail.com', 'pequenos', 3000.0);
 INSERT INTO tb_veterinario (nome, email, especialidade, salario) VALUES('JOAO',  'joao@gmail.com', 'pequenos', 3150.0);
+INSERT INTO tb_veterinario (nome, email, especialidade, salario) VALUES('ROBERTO', 'roberto@gmail.com', 'pequenos', 3300.0);

@@ -16,6 +16,8 @@ public class VeterinarioRepositoryTests {
     @Autowired
     private VeterinarioRepository veterinarioRepository;
 
+    // CICLO 1
+
     @Test
     public void buscaPorNomeMinusculoExata(){
 
@@ -69,4 +71,49 @@ public class VeterinarioRepositoryTests {
         assertEquals(1, resultado.size());
         assertEquals("JOAO", resultado.get(0).getNome());
     }
+
+    // CICLO 2 
+
+    @Test
+    public void buscaSilabaRo(){
+
+        // Arrange
+        String nomeTeste = "ro";
+
+        // Act
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+
+        // Assert
+        assertEquals(2, resultado.size());
+
+    }
+
+    @Test
+    public void buscaNomeMaria(){
+
+        // Arrange
+        String nomeTeste = "Maria";
+
+        // Act
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+
+        // Assert
+        assertTrue(resultado.isEmpty());
+
+    }
+
+    @Test
+    public void buscaStringVazia(){
+
+        // Arrange
+        String nomeTeste = "";
+
+        // Act
+        List<Veterinario> resultado = veterinarioRepository.findByNomeContains(nomeTeste);
+
+        // Assert
+        assertEquals(6, resultado.size()); 
+
+    }
+
 }

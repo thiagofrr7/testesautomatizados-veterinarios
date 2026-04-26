@@ -3,6 +3,7 @@ package org.iftm.gerenciadorveterinarios.repositories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.iftm.gerenciadorveterinarios.entities.Veterinario;
@@ -116,4 +117,49 @@ public class VeterinarioRepositoryTests {
 
     }
 
+    // CICLO 3
+
+    @Test
+    public void retornarVeterinariosComSalarioSuperior(){
+
+        // Arrange
+        BigDecimal salario = new BigDecimal("3200.0");
+
+        // Act
+        List<Veterinario> resultado =
+            veterinarioRepository.findBySalarioGreaterThan(salario);
+
+        // Assert
+        assertEquals(3, resultado.size());
+    }
+
+    @Test
+    public void retornarVeterinariosComSalarioInferior(){
+
+        // Arrange
+        BigDecimal salario = new BigDecimal("3200.0");
+
+        // Act
+        List<Veterinario> resultado =
+            veterinarioRepository.findBySalarioLessThan(salario);
+
+        // Assert
+        assertEquals(2, resultado.size());
+    }
+
+    @Test
+    public void retornarVeterinariosComSalarioEntreFaixaDeValores(){
+
+        // Arrange
+        BigDecimal min = new BigDecimal("3000.0");
+        BigDecimal max = new BigDecimal("3500.0");
+
+        // Act
+        List<Veterinario> resultado =
+            veterinarioRepository.findBySalarioBetween(min, max);
+
+        // Assert
+        assertEquals(5, resultado.size());
+    }
+    
 }

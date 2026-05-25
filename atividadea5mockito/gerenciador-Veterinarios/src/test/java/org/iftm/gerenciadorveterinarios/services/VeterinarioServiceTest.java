@@ -1,76 +1,67 @@
-package org.iftm.gerenciadorveterinarios.servicies;
+package org.iftm.gerenciadorveterinarios.services;
 
-import java.math.BigDecimal;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.iftm.gerenciadorveterinarios.entities.Veterinario;
 import org.iftm.gerenciadorveterinarios.repositories.VeterinarioRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-@ExtendWith(MockitoExtension.class)
 public class VeterinarioServiceTest {
 
-    // cria a simulação/mock de todas as classes que serão injetadas na classe a ser testada
     @Mock
-    private VeterinarioRepository repositorio;
+    private VeterinarioRepository repositorioMock;
 
-    //classe a ser testada que receberá todas as injeções de classes mock
     @InjectMocks
     private VeterinarioService service;
 
-    /*Validar se a busca por veterinario retorna o veterinário correto e o nome com no máximo 10 caracteres. */
-    @Test
-    public void testarBuscarVeterinarioPorIDExistenteRetornaVeterinarioComTruncado(){
-        //arrange
-        String nomeExistente = "Erica Queiroz Pinto";
-        int tamanhoEsperadoNome = 10;        
-        String nomeEsperado = "Erica Quei";
-        Veterinario veterinarioEsperado = new Veterinario(null, nomeExistente, "", "", BigDecimal.valueOf(0));
-
-        //configurar o mock - criando o cenário de teste
-        when(repositorio.findById(Mockito.anyInt())).thenReturn(Optional.of(veterinarioEsperado));
-
-        //act
-        Optional<Veterinario> resposta = service.buscaVeterinariosPeloId(Mockito.anyInt());   
-        Veterinario veterinarioRetornado = resposta.get();
-
-        //assert
-        assertTrue(resposta.isPresent());
-        assertEquals(tamanhoEsperadoNome, veterinarioRetornado.getNome().length());
-        assertEquals(nomeEsperado, veterinarioRetornado.getNome());
-
-        verify(repositorio).findById(Mockito.anyInt());
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testarApagarRealmenteApagaRegistro(){
-        //Arrange
-        Integer idExistente = 2;
-        String nomeExistente = "Erica Queiroz Pinto";
-        Veterinario veterinarioExcluido = new Veterinario(idExistente, nomeExistente, "", "", null);
-
-        //act and assert
-        assertDoesNotThrow(
-            ()->{
-        service.apagar(veterinarioExcluido);
-        }
+    void deveBuscarVeterinariosComParteDoNome() {
+        // Arrange
+        List<Veterinario> listaMockada = Arrays.asList(
+            new Veterinario(1, "Dr. Roberto Silva", "", "", null),
+            new Veterinario(2, "Dra. Maria Silva", "", "", null)
         );
+        when(repositorioMock.findByNomeContains("Silva")).thenReturn(listaMockada);
 
-        verify(repositorio).delete(veterinarioExcluido);
+        // Act
+        List<Veterinario> resultado = service.buscaVeterinariosComParteNome("Silva");
 
+        // Assert
+        assertEquals(2, resultado.size(), "A lista deveria conter 2 veterinários.");
+        verify(repositorioMock, times(1)).findByNomeContains("Silva");
     }
 
+    @Test
+    void deveLancarExcecaoAoApagarQuandoIdNaoExistir() {
+        // Arrange
+        Integer idInexistente = 99; 
+        
+        Veterinario vetInexistente = new Veterinario(idInexistente, "Inexistente", "", "", null);
+        
+        when(repositorioMock.findById(idInexistente)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> {
+            service.apagar(vetInexistente);
+        });
+
+        // Assert
+        verify(repositorioMock, never()).delete(any(Veterinario.class));
+    }
 
 }

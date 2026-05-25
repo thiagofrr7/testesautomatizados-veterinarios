@@ -1,4 +1,4 @@
-package org.iftm.gerenciadorveterinarios.servicies;
+package org.iftm.gerenciadorveterinarios.services;
 
 import java.util.List;
 import java.util.Optional;

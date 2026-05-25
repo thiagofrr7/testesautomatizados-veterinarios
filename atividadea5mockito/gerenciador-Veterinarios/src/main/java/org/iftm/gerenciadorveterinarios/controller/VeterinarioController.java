@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.iftm.gerenciadorveterinarios.entities.Veterinario;
 import org.iftm.gerenciadorveterinarios.repositories.VeterinarioRepository;
-import org.iftm.gerenciadorveterinarios.servicies.VeterinarioService;
+import org.iftm.gerenciadorveterinarios.services.VeterinarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
